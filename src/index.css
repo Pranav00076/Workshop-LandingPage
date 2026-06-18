@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg-color text-text-main font-sans overflow-x-hidden antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .bg-pattern {
+    background-image: radial-gradient(circle at top, #1E293B 0%, #0F172A 70%), url('https://www.transparenttextures.com/patterns/cubes.png');
+    background-blend-mode: overlay, normal;
+  }
+  
+  .glass-card {
+    @apply bg-bg-color/80 backdrop-blur-md border border-surface-light rounded-2xl shadow-xl transition-all duration-300;
+  }
+}
