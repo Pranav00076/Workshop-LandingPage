@@ -12,10 +12,20 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/worksh
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Failed to connect to MongoDB:', err));
+// Serverless MongoDB Connection Wrapper
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(MONGODB_URI);
+    isConnected = true;
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error);
+    throw error; // Throw so we can catch it in the route
+  }
+};
 
 // Enquiry Schema & Model
 const enquirySchema = new mongoose.Schema({
@@ -30,6 +40,8 @@ const Enquiry = mongoose.model('Enquiry', enquirySchema);
 // Enquiry API Endpoint
 app.post('/api/enquiry', async (req: Request, res: Response) => {
   try {
+    await connectDB(); // Ensure DB is connected before processing
+    
     const { name, email, phone } = req.body;
 
     // Server-side validation
@@ -64,6 +76,11 @@ app.post('/api/enquiry', async (req: Request, res: Response) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Vercel Serverless Function compatibility
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
