@@ -49,21 +49,22 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-5">
-        <header className="flex justify-between items-center py-5 border-b border-surface">
-          <div className="text-2xl font-display font-extrabold text-secondary tracking-wide">Kidrove</div>
+        <header className="flex justify-between items-center py-5 border-b border-wine/20">
+          <div className="text-2xl font-display font-extrabold text-wine tracking-wide">Kidrove</div>
         </header>
       </div>
 
       <section className="relative py-24 text-center bg-pattern">
         <div className="max-w-7xl mx-auto px-5 relative z-10">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-text-main to-text-muted bg-clip-text text-transparent">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-wine/10 rounded-full blur-[100px] animate-blob"></div>
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-wine to-maroon bg-clip-text text-transparent relative z-10">
             AI & Robotics Summer Workshop
           </h1>
           <p className="text-xl text-text-muted max-w-2xl mx-auto mb-10">
             Dive into the future with our interactive summer workshop. Build real robots, 
             understand artificial intelligence, and learn coding in a fun, engaging environment.
           </p>
-          <a href="#register" className="inline-block px-8 py-4 text-lg font-semibold rounded-full bg-primary text-white shadow-[0_4px_15px_rgba(79,70,229,0.4)] hover:bg-primary-hover hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(79,70,229,0.6)] transition-all duration-300">
+          <a href="#register" className="btn-primary inline-block px-8 py-4 text-lg font-semibold rounded-full relative z-10">
             Enroll Now
           </a>
         </div>
@@ -80,8 +81,8 @@ export default function App() {
               { icon: CreditCard, label: 'Fee', value: '₹2,999' },
               { icon: Calendar, label: 'Start Date', value: '15 July 2026' }
             ].map((detail, idx) => (
-              <div key={idx} className="glass-card p-8 text-center hover:-translate-y-2 hover:border-primary">
-                <detail.icon className="w-12 h-12 mx-auto text-secondary mb-4" />
+              <div key={idx} className="glass-card p-8 text-center hover:-translate-y-2 hover:border-wine animate-float" style={{animationDelay: `${idx * 0.15}s`}}>
+                <detail.icon className="w-12 h-12 mx-auto text-wine mb-4" />
                 <h3 className="text-text-muted font-semibold mb-2">{detail.label}</h3>
                 <p className="text-2xl font-bold text-text-main">{detail.value}</p>
               </div>
@@ -101,8 +102,8 @@ export default function App() {
               "Create hands-on AI projects such as voice recognition and image classification.",
               "Collaborate with peers and showcase a final capstone project on graduation day."
             ].map((outcome, idx) => (
-              <li key={idx} className="bg-surface p-6 rounded-xl flex items-center gap-4 hover:bg-surface-light hover:translate-x-2 transition-all duration-300">
-                <CheckCircle2 className="text-accent w-6 h-6 shrink-0" />
+              <li key={idx} className="glass-card bg-sand/30 p-6 flex items-center gap-4 hover:bg-sand/50 hover:translate-x-2 border-transparent hover:border-wine/30 transition-all duration-300">
+                <CheckCircle2 className="text-wine w-6 h-6 shrink-0" />
                 <span className="text-lg">{outcome}</span>
               </li>
             ))}
@@ -119,9 +120,9 @@ export default function App() {
               { q: 'What hardware or software is required?', a: 'All you need is a computer or tablet with a stable internet connection. All tools used are web-based and free.' },
               { q: 'Will I get a certificate upon completion?', a: 'Yes! Every student who successfully completes their final project will receive a verified Kidrove certificate.' }
             ].map((faq, idx) => (
-              <div key={idx} className="bg-bg-color border border-surface-light rounded-xl overflow-hidden">
+              <div key={idx} className="glass-card overflow-hidden !rounded-xl">
                 <button 
-                  className="w-full px-8 py-6 text-left flex justify-between items-center text-lg font-semibold hover:bg-surface-light/50 transition-colors"
+                  className="w-full px-8 py-6 text-left flex justify-between items-center text-lg font-semibold hover:bg-sand/40 transition-colors"
                   onClick={() => toggleFaq(idx)}
                 >
                   <span>{faq.q}</span>
@@ -145,12 +146,12 @@ export default function App() {
             
             {submitSuccess ? (
               <div className="text-center py-8">
-                <CheckCircle2 className="w-16 h-16 text-accent mx-auto mb-4" />
-                <h3 className="text-2xl font-bold mb-2">Registration Successful!</h3>
+                <CheckCircle2 className="w-16 h-16 text-wine mx-auto mb-4" />
+                <h3 className="text-2xl font-bold mb-2 text-wine">Registration Successful!</h3>
                 <p className="text-text-muted">We have received your details. Please check your email for the next steps.</p>
                 <button 
                   onClick={() => setSubmitSuccess(false)}
-                  className="mt-8 px-6 py-2 border border-surface-light rounded-full text-text-muted hover:text-text-main hover:bg-surface transition-colors"
+                  className="mt-8 px-6 py-2 border border-wine rounded-full text-text-muted hover:text-white hover:bg-wine transition-colors"
                 >
                   Register Another Student
                 </button>
@@ -164,7 +165,7 @@ export default function App() {
                     type="text" 
                     placeholder="Student's Name" 
                     {...register("name", { required: "Name is required" })}
-                    className={`w-full p-4 rounded-xl border ${errors.name ? 'border-red-500' : 'border-surface-light'} bg-bg-color text-text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
+                    className={`w-full p-4 rounded-xl glass-input ${errors.name ? 'border-red-500' : ''}`}
                   />
                   {errors.name && <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>}
                 </div>
@@ -182,7 +183,7 @@ export default function App() {
                         message: "Invalid email address"
                       }
                     })}
-                    className={`w-full p-4 rounded-xl border ${errors.email ? 'border-red-500' : 'border-surface-light'} bg-bg-color text-text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
+                    className={`w-full p-4 rounded-xl glass-input ${errors.email ? 'border-red-500' : ''}`}
                   />
                   {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>}
                 </div>
@@ -197,7 +198,7 @@ export default function App() {
                       required: "Phone number is required",
                       minLength: { value: 10, message: "Phone number must be at least 10 digits" }
                     })}
-                    className={`w-full p-4 rounded-xl border ${errors.phone ? 'border-red-500' : 'border-surface-light'} bg-bg-color text-text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all`}
+                    className={`w-full p-4 rounded-xl glass-input ${errors.phone ? 'border-red-500' : ''}`}
                   />
                   {errors.phone && <p className="mt-2 text-sm text-red-500">{errors.phone.message}</p>}
                 </div>
@@ -205,7 +206,7 @@ export default function App() {
                 <button 
                   type="submit" 
                   disabled={isSubmittingForm}
-                  className="w-full py-4 text-lg font-semibold rounded-xl bg-primary text-white shadow-[0_4px_15px_rgba(79,70,229,0.4)] hover:bg-primary-hover transition-all disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                  className="w-full py-4 text-lg font-semibold rounded-xl btn-primary disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
                 >
                   {isSubmittingForm ? (
                     <>
@@ -222,7 +223,7 @@ export default function App() {
         </div>
       </section>
 
-      <footer className="text-center py-8 border-t border-surface text-text-muted">
+      <footer className="text-center py-8 border-t border-wine/20 text-text-muted">
         <p>© 2026 Kidrove. All rights reserved.</p>
       </footer>
     </div>
