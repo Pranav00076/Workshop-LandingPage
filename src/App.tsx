@@ -19,17 +19,31 @@ export default function App() {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     setIsSubmittingForm(true);
     setSubmitSuccess(false);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmittingForm(false);
+    try {
+      const response = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Registration failed');
+      }
+
       setSubmitSuccess(true);
       reset();
       console.log('Submitted Data:', data);
-    }, 2000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert(error instanceof Error ? error.message : 'An error occurred during registration. Please try again.');
+    } finally {
+      setIsSubmittingForm(false);
+    }
   };
 
   return (
